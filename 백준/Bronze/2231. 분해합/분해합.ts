@@ -4,7 +4,8 @@ const filepath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 const input = fs.readFileSync(filepath).toString().trim().split("\n");
 
 const n = input[0];
-let nNum = -1;
+let start = n - (String(n).length * 9);
+let nNum = start;
 let answer = 0;
 
 while(nNum <= n) {
