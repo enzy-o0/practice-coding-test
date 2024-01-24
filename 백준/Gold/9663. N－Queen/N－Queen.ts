@@ -1,16 +1,15 @@
 const fs = require("fs");
-const filepath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 
-const input = fs.readFileSync(filepath).toString();
+const input = fs.readFileSync("/dev/stdin").toString().trim();
 const N = Number(input);
 
-let queens = [];
+let queens = new Array(N + 1).fill(0);
 let count = 0;
 
-function checkCondition(x, y) {
-    for (const [a, b] of queens) {
-        if (a === x || b === y) return false;
-        if (Math.abs(a - x) === Math.abs(b - y)) return false;
+function checkCondition(row) {
+    for (let i = 0; i < row; i++) {
+        if (queens[i] === queens[row]) return false;
+        if (Math.abs(queens[i] - queens[row]) === Math.abs(i - row)) return false;
     }
     
     return true;
@@ -19,14 +18,13 @@ function checkCondition(x, y) {
 function dfs(row) {
     if (row === N) {
         count++;
-        return;
-    }
-    
-    for (let j = 0; j < N; j++) {
-        if (!checkCondition(row, j)) continue;
-        queens.push([row, j]);
-        dfs(row + 1);
-        queens.pop();
+    } else {   
+        for (let j = 0; j < N; j++) {
+            queens[row] = j;
+            if (checkCondition(row)) {
+                dfs(row + 1);
+            }
+        }  
     }
 }
 
