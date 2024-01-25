@@ -18,14 +18,16 @@ function checkCondition(row) {
 function dfs(row) {
     if (row === N) {
         count++;
-    } else {   
-        for (let j = 0; j < N; j++) {
-            queens[row] = j;
-            if (checkCondition(row)) {
-                dfs(row + 1);
-            }
-        }  
-    }
+        return;
+    } 
+    
+    
+    for (let j = 0; j < N; j++) {
+        queens[row] = j;
+        if (checkCondition(row)) {
+            dfs(row + 1);
+        }
+    }  
 }
 
 dfs(0);
